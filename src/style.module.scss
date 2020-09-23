@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.mainArea{
+    background-color: #edefff;
+    display: flex;   
+    flex-wrap: wrap;
+    align-items: flex-start;
+    height: 100vh;
+    .card{
+        width: 100px;
+        height: 170px;
+        background-color: #b7c1ff;
+        margin: 10px;
+        border-radius: 3px;
+    }
+    ul{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        list-style-type: none;
+        li{
+            margin: 10px;
+        }
+        .active{
+            background-color: red;
+        }
+    }
+
+}
