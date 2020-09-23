@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
+var aa = 'sss'
+ReactDOM.render(      
   <React.StrictMode>
-    <App />
+    <div className="App">
+      <header className="App-header">
+       asdasd
+      </header> фывфывыфв
+    </div>
   </React.StrictMode>,
   document.getElementById('root')
 );
