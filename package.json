@@ -1,8 +1,8 @@
 {
+  "homepage ":"https://skochk.github.io/test-task-mobx",
   "name": "job",
   "version": "0.1.0",
   "private": true,
-  "homepage ":"https://skochk.github.io/test-task-mobx/",
   "dependencies": {
     "@babel/core": "7.9.0",
     "@babel/plugin-proposal-decorators": "^7.10.5",
