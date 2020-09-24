@@ -1,32 +1,75 @@
 * {
     margin: 0;
     padding: 0;
+    font-family: sans-serif;
 }
-
-.mainArea{
+.box{
     background-color: #edefff;
-    display: flex;   
-    flex-wrap: wrap;
-    align-items: flex-start;
     height: 100vh;
-    .card{
-        width: 100px;
-        height: 170px;
-        background-color: #b7c1ff;
-        margin: 10px;
-        border-radius: 3px;
-    }
-    ul{
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        list-style-type: none;
-        li{
-            margin: 10px;
-        }
-        .active{
-            background-color: red;
+    .modal{
+        width: 600px;
+        height: 400px;
+        background-color: #7487ff;
+        position: absolute;
+        left: calc(50% - 300px); 
+        top: 30%;
+        .close{
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            bottom:10px;
+            font-size: 20px;
         }
     }
+    .loader{
+        position: absolute;
+        padding-top: 150px;
+        filter: blur(0);
+        left: 50%; 
+        top: 30%;
+        transform: translate(-50%, -50%);
+        z-index: 999;
+        color: #006be6;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: black;
+    }
+    .mainArea{
+        display: flex;   
+        flex-wrap: wrap;
+        align-items: flex-start;
 
+        .card{
+            width: 100px;
+            height: 290px;
+            background-color: #b7c1ff;
+            margin: 10px;
+            border-radius: 5px;
+            padding-top: 10px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .tags{
+                width: 90%;
+                text-align: center;
+                .tag{
+                    color: white;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+        ul{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            list-style-type: none;
+            li{
+                margin: 10px;
+            }
+            .active{
+                background-color: red;
+            }
+        }
+
+    }
 }

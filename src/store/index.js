@@ -7,6 +7,10 @@ class Store{
     itemsCount = 0;
     elementPerList = 20;
     currentPage = 0;
+    itemForModal = {};
+    tempArr = [];
+    selectedFilters = [];
+    allFiltres = [];
 
     pushPokemons = (item)=>{
         this.pokemons.push(item);
@@ -19,10 +23,23 @@ class Store{
         await fetchList(offset,limit)
         .then(data=>{
             console.log('store',data);
+            //getting select values
+            let arr = [];
+            data.items.map(el=>{
+                el.types.map(item=>{
+                    arr.push(item.type.name);
+                })
+            });
+            let uniqueArr = arr.filter((item,index)=>{return arr.indexOf(item) == index});
+            console.log("all filtres:",uniqueArr);
+            let selectArr =[]
+            uniqueArr.map(el=>{ selectArr.push({value:el,label:el})})
+            console.log('all filtres',selectArr);
             runInAction(()=>{
                 this.pokemons = data.items
                 this.status = "success"
-                this.itemsCount = data.count
+                this.itemsCount = data.count;
+                this.allFiltres = selectArr;
             })
         }).catch(err=>{
             console.log(err)
@@ -37,7 +54,7 @@ class Store{
        
     }
     setPage(page){
-        this.currentPage = page;
+        this.currentPage = page; 
     }
     updatePagination(e){
         console.log(e.target.value);
@@ -51,12 +68,65 @@ class Store{
     get pageCount(){
         return this.itemsCount / this.elementPerList;
     }
+
     changingPage(page){
-        console.log(page.selected);
         this.setPage(page.selected);
         this.getList(this.offset,this.elementPerList);
         this.setStatus('pending');
     }
+    callModal(el){
+        console.log(el.name);
+        this.itemForModal = el;
+    }
+
+    filterByName(e){
+        if(this.tempArr.length){
+            this.pokemons = this.tempArr;
+        } // allow find second time by another name, because my this.pokemons modified after first search
+        let arr = this.pokemons.slice();
+        let filteredArr = arr.filter(el=> el.name == e.target.value);
+        if(filteredArr.length){
+            this.tempArr = this.pokemons;
+            this.pokemons = filteredArr;
+        }else if(e.target.value.length == 0){
+            this.pokemons = this.tempArr;
+        }
+    }
+
+    handleTypeSelect(e){
+        console.log('asdasd',JSON.stringify(e));
+        // let filtres = []
+        // let filtres = Array.from(e.target.selectedOptions, option => option.value);
+        let filtres = [];
+        
+        if(e == null){
+            filtres = this.allFiltres;
+        }else{
+            e.map(el=>filtres.push(el.value));
+        }
+            
+        console.log('asd',typeof filtres, filtres);
+        
+        // this.selectedFilters = filtres;
+        
+        console.log('tempArr',this.tempArr)
+        // if(this.tempArr.length){ // if at least one filter choosed, pokemons need to throw to default
+        //     this.pokemons = this.tempArr;
+        // }
+        // let newArr = [];
+        console.log('pokemons', this.pokemons);
+        // this.pokemons.map(pokemon=>{
+        //     pokemon.types.map(el=>{
+        //         if(filtres.indexOf(el.type.name) > -1){    
+        //             newArr.push(pokemon);
+        //         }
+        //     })
+        // })
+        // this.tempArr = this.pokemons;
+        // this.pokemons = newArr;
+   
+    }
+
 }
 
 decorate(Store,{
@@ -67,9 +137,13 @@ decorate(Store,{
     updatePagination: action,
     offset: computed,
     changingPage: action,
-    currentPage: observable,
+    currentPage: observable, 
     setStatus: action,
-    pageCount: computed
+    pageCount: computed,
+    itemForModal: observable,
+    tempArr: observable,
+    allFiltres: observable,
+    selectedFilters: observable
 
 })
 export default new Store(); 
