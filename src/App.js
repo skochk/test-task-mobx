@@ -28,29 +28,48 @@ const App = observer(() => {
 
     return(
         <div className={styles.box}>
+            <div className={styles.nagivation}>
+                <Select
+                    className={styles.tagFilter}
+                    onChange={e=>store.filterByTag(e)} 
+                    closeMenuOnSelect={false}
+                    components={animatedComponents}
+                    defaultValue={allFiltres}
+                    isMulti
+                    options={allFiltres}
+                />
+                <input 
+                    className={styles.nameSearch}
+                    onChange={e=>store.filterByName(e)}
+                    placeholder="find by fullname"
+                />
+                <div className={styles.pagination}> 
+                    <h3>items per list:</h3>
+                    <select value={elementPerList} onChange={(e)=>store.updatePagination(e)}>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+                <ReactPaginate 
+                    previousLabel={'previous'}
+                    nextLabel={'next'}
+                    pageCount={pageCount}
+                    breakLabel={'...'} 
+                    breakClassName={'break-me'}
+                    onPageChange={e=>store.changingPage(e)}
+                    marginPagesDisplayed={1}
+                    pageRangeDisplayed={1}
+                    initialPage = {currentPage}
+                    containerClassName={'paginationMenu'}
+                    subContainerClassName={'pages pagination'}
+                    activeClassName={styles.active}
+                />
+            </div>
             <h1 className={styles.loader}>{status == "pending" ? "Retrieving data..." : null}</h1>
-            <input onChange={e=>store.filterByName(e)}/>
-            <div className={styles.mainArea} style={{filter: status === "pending" ?  "blur(10px)" : null}}>
-           
-            {/* <select
-             value={allFiltres.filter(obj=>selectedFilters.includes(obj))}
-             onChange={e=>store.handleTypeSelect(e)} 
-             multiple 
-             >
-                {allFiltres.map(el=>(
-                    <option key={el} value={el}>{el}</option>
-                ))}
-            </select> */}
             
-            <Select
-                onChange={e=>store.filterByTag(e)} 
-                closeMenuOnSelect={false}
-                // value={selectedFilters}
-                components={animatedComponents}
-                defaultValue={allFiltres}
-                isMulti
-                options={allFiltres}
-            />
+            <div className={styles.mainArea} style={{filter: status === "pending" ?  "blur(10px)" : null}}>
+
             {pokemons.map(el=>(
                 <div className={styles.card} key={el.name+Date.now()} onClick={e=>store.callModal(el)}>
                     <div>{el.name}</div>
@@ -67,25 +86,7 @@ const App = observer(() => {
                     </div>
                 </div> 
             ))}
-            <ReactPaginate 
-                previousLabel={'previous'}
-                nextLabel={'next'}
-                pageCount={pageCount}
-                breakLabel={'...'} 
-                breakClassName={'break-me'}
-                onPageChange={e=>store.changingPage(e)}
-                marginPagesDisplayed={1}
-                pageRangeDisplayed={1}
-                initialPage = {currentPage}
-                containerClassName={'pagination'}
-                subContainerClassName={'pages pagination'}
-                activeClassName={styles.active}
-            />
-            <select value={elementPerList} onChange={(e)=>store.updatePagination(e)}>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-            </select>
+
             </div>
             
             {Object.keys(itemForModal).length ? 

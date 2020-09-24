@@ -63,7 +63,7 @@ class Store{
         this.getList(this.offset,this.elementPerList);
     }
     get offset(){
-        return (this.currentPage+1)* this.elementPerList;
+        return (this.currentPage)* this.elementPerList;
     }
     get pageCount(){
         return this.itemsCount / this.elementPerList;
@@ -80,15 +80,23 @@ class Store{
     }
 
     filterByName(e){
-        if(this.tempArr.length){
+
+        if(this.tempArr.length){ // allow find second time by another name, because my this.pokemons modified after first search
             this.pokemons = this.tempArr;
-        } // allow find second time by another name, because my this.pokemons modified after first search
+        }  
         let arr = this.pokemons.slice();
         let filteredArr = arr.filter(el=> el.name == e.target.value);
+
+        if(!filteredArr.length && e.target.value.length){
+            this.tempArr = this.pokemons;
+        }
         if(filteredArr.length){
             this.tempArr = this.pokemons;
             this.pokemons = filteredArr;
         }else if(e.target.value.length == 0){
+            console.log('asd')
+            console.log("temp:",this.tempArr);
+            console.log('main',this.pokemons);
             this.pokemons = this.tempArr;
         }
     }
