@@ -1,5 +1,5 @@
 import { decorate, runInAction, computed, observable, action } from 'mobx';
-import {fetchList} from "./../api.js";
+import fetchList from "./../api.js";
 
 class Store{
     pokemons = [];
