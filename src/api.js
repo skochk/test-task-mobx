@@ -1,4 +1,4 @@
-module.exports = async(offset,limit)=>{
+export const fetchList = async(offset,limit)=>{
 
     console.log('offset,limit:',offset,limit)
     return new Promise(async(resolve,reject)=>{
