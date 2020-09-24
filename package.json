@@ -1,5 +1,4 @@
 {
-  "homepage ":"https://skochk.github.io/test-task-mobx",
   "name": "job",
   "version": "0.1.0",
   "private": true,
@@ -91,6 +90,7 @@
       "last 1 safari version"
     ]
   },
+  "homepage": "./",
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.1",
