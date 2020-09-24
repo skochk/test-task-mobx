@@ -31,10 +31,10 @@ class Store{
                 })
             });
             let uniqueArr = arr.filter((item,index)=>{return arr.indexOf(item) == index});
-            console.log("all filtres:",uniqueArr);
+
             let selectArr =[]
             uniqueArr.map(el=>{ selectArr.push({value:el,label:el})})
-            console.log('all filtres',selectArr);
+
             runInAction(()=>{
                 this.pokemons = data.items
                 this.status = "success"
@@ -93,40 +93,30 @@ class Store{
         }
     }
 
-    handleTypeSelect(e){
-        console.log('asdasd',JSON.stringify(e));
-        // let filtres = []
-        // let filtres = Array.from(e.target.selectedOptions, option => option.value);
+    filterByTag(e){
         let filtres = [];
-        
-        if(e == null){
+        if(this.tempArr.length){ // if at least one filter choosed, pokemons need to throw to default
+            this.pokemons = this.tempArr;
+        }
+        if(e == null ||  !e.length){
             filtres = this.allFiltres;
+            this.pokemons = this.tempArr;
         }else{
             e.map(el=>filtres.push(el.value));
+            let newArr = [];
+            this.pokemons.map(pokemon=>{
+                pokemon.types.map(el=>{
+                    if(filtres.indexOf(el.type.name) > -1){    
+                        newArr.push(pokemon);
+                    }
+                })
+            })
+            this.tempArr = this.pokemons;
+            this.pokemons = newArr;
         }
-            
-        console.log('asd',typeof filtres, filtres);
-        
-        // this.selectedFilters = filtres;
-        
-        console.log('tempArr',this.tempArr)
-        // if(this.tempArr.length){ // if at least one filter choosed, pokemons need to throw to default
-        //     this.pokemons = this.tempArr;
-        // }
-        // let newArr = [];
-        console.log('pokemons', this.pokemons);
-        // this.pokemons.map(pokemon=>{
-        //     pokemon.types.map(el=>{
-        //         if(filtres.indexOf(el.type.name) > -1){    
-        //             newArr.push(pokemon);
-        //         }
-        //     })
-        // })
-        // this.tempArr = this.pokemons;
-        // this.pokemons = newArr;
-   
-    }
 
+
+    }
 }
 
 decorate(Store,{

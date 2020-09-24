@@ -43,7 +43,7 @@ const App = observer(() => {
             </select> */}
             
             <Select
-                onChange={store.handleTypeSelect} 
+                onChange={e=>store.filterByTag(e)} 
                 closeMenuOnSelect={false}
                 // value={selectedFilters}
                 components={animatedComponents}
@@ -52,7 +52,7 @@ const App = observer(() => {
                 options={allFiltres}
             />
             {pokemons.map(el=>(
-                <div className={styles.card} key={el.name} onClick={e=>store.callModal(el)}>
+                <div className={styles.card} key={el.name+Date.now()} onClick={e=>store.callModal(el)}>
                     <div>{el.name}</div>
                     <img src={el.sprites.front_default} alt={el.name}/>
                     <h3>stats:</h3>
@@ -92,8 +92,15 @@ const App = observer(() => {
                 <div className={styles.modal} ref={ref}>
                     <div className={styles.leftPart}>
                         <img src={itemForModal.sprites.front_default} alt={itemForModal.name}/>
+                        <h1>{itemForModal.name}</h1>
+                        <p>weigth: {itemForModal.weight}</p>
                     </div>
-                    <div className={styles.rightPart}></div>
+                    <div className={styles.rightPart}>
+                        <h2>stats:</h2>
+                        {itemForModal.stats.map(el=>(
+                            <p key={el.base_stat+el.stat.name}>{el.stat.name}: {el.base_stat}</p>
+                        ))}
+                    </div>
                     <p className={styles.close} onClick={e=>store.callModal({})}>Close</p>
                 </div> 
             : null}
